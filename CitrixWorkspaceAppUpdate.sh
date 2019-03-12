@@ -91,7 +91,7 @@ update_func () {
 
   logger_func INFO "Downloading update..."
 
-  declare -r download_url=`/usr/bin/curl -A "${user_agent}" --fail --connect-timeout 10 -m 300 -s "${app_url}" | sed -n 's/.*rel="\/\/\(downloads.citrix.com.*\)" id=".*/\1/p'`
+  declare -r download_url=`/usr/bin/curl -A "${user_agent}" --fail --connect-timeout 10 -m 300 -s "${app_url}" | /usr/bin/sed -n 's/.*rel="\/\/\(downloads.citrix.com.*\)" id=".*/\1/p'`
   /usr/bin/curl -A "${user_agent}" --fail --connect-timeout 10 -m 300 -s -o "${dmg_file}" "${download_url}"
   if [ $? -eq 0 ]; then
     logger_func INFO "Successfully downloaded update"
