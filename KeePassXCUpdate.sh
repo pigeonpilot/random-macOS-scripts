@@ -147,7 +147,7 @@ if [ '`/usr/bin/uname -p`'="i386" -o '`/usr/bin/uname -p`'="x86_64" ]; then
     logger_func INFO "Installed version of KeePassXC is ${curr_installed_app_ver}, latest version is ${latest_app_ver}, update needed."
     update_func
   else
-    logger_func INFO "Installed version of VideoLAN is ${curr_installed_app_ver}, latest version is ${latest_app_ver}, update is not needed."
+    logger_func INFO "Installed version of KeePassXC is ${curr_installed_app_ver}, latest version is ${latest_app_ver}, update is not needed."
   fi
 
   cleanup_func 0
