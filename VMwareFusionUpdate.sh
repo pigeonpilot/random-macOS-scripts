@@ -83,7 +83,7 @@ app_ver_func () {
     logger_func ERROR "Error detecting installed version of VMware Fusion."
   fi
 
-  latest_app_ver=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}" | /usr/bin/sed -n 's/.*href="\(.*\)\/".*/\1/p' | /usr/bin/grep ^"${curr_installed_app_major}" | /usr/bin/sort -n | /usr/bin/tail -n 1`
+  latest_app_ver=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}" | /usr/bin/sed -n 's/.*href="\(.*\)\/".*/\1/p' | /usr/bin/grep ^"${curr_installed_app_major}" | /usr/bin/sort -V | /usr/bin/tail -n 1`
   if [[ "${latest_app_ver}" =~ ^[0-9]+ ]]; then
     latest_app_build=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}/${latest_app_ver}" | /usr/bin/sed -n 's/.*href="\([0-9]*\)\/".*/\1/p'`
   else
