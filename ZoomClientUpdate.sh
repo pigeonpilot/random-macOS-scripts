@@ -18,8 +18,6 @@
 #
 ####################################################################################################
 
-# TODO fix sigcheck
-
 declare latest_app_ver=""
 declare curr_installed_app_ver=""
 declare -r latest_app_url="https://zoom.us/client/latest/Zoom.pkg"
