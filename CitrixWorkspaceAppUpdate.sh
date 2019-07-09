@@ -75,7 +75,7 @@ app_ver_func () {
     logger_func ERROR "Error detecting installed version."
   fi
 
-  latest_app_ver=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${app_url}" | /usr/bin/sed -n 's/<p>Version:&nbsp;\(.*\) (.*/\1/p'`
+  latest_app_ver=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${app_url}" | /usr/bin/sed -n 's/<p>Version: \(.*\) (.*/\1/p' | /usr/bin/head -n1`
   if [[ ! "${latest_app_ver}" =~ ^[0-9]+ ]]; then
     logger_func ERROR "Error detecting latest version."
   fi
