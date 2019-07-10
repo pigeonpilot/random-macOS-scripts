@@ -105,7 +105,7 @@ if [ '`/usr/bin/uname -p`'="i386" -o '`/usr/bin/uname -p`'="x86_64" ]; then
     logger_func ERROR "Can't detect OS version."
   fi
   user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X ${os_version}) AppleWebKit/535.6.2 (KHTML, like Gecko) Version/5.2 Safari/535.6.2"
-  if [ -f "/Applications/VirtualBox.app/Contents/Info.plist" ]; then
+  if [ -f "/Applications/zoom.us.app/Contents/Info.plist" ]; then
     app_ver_func
     logger_func INFO "Currently installed version is ${curr_installed_app_ver}."
     logger_func INFO "Latest version is ${latest_app_ver}."
