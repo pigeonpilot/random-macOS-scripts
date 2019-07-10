@@ -112,8 +112,7 @@ update_func () {
   app_pkg_path=`/usr/bin/find "${app_mount}" -type f -name "Install Citrix Workspace.pkg"`
 
   if [[ "${app_pkg_path}" != "" ]]; then
-    signature_check=`/usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -A100 "Status: signed by a certificate trusted by Mac OS X" | /usr/bin/sed -n 's/.*Developer ID Installer: \(Citrix Systems\).*/\1/p'`
-    if [[ "${signature_check}" = "Citrix Systems" ]]; then
+    if /usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
       logger_func INFO "Package certificate seems valid, installing..."
       installer_err=`/usr/sbin/installer -pkg "${app_pkg_path}" -target "/" -verboseR | "/usr/bin/grep" "was successful."`
       if [[ "${installer_err}" =~ "was successful." ]]; then

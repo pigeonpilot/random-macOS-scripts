@@ -23,7 +23,6 @@ declare curr_installed_app_ver=""
 declare -r latest_app_url="https://zoom.us/client/latest/Zoom.pkg"
 declare -r log_file="/Library/Logs/ZoomClientUpdate.log"
 declare os_version=""
-declare signature_check=""
 declare tmp_pkg_dir=""
 declare -r update_url="https://zoom.us/download#client_4meeting"
 declare user_agent=""
@@ -84,8 +83,7 @@ update_app_func () {
     logger_func ERROR "Error when downloading "${tmp_pkg_dir}/Zoom.pkg"."
   fi
 
-  signature_check=`/usr/sbin/pkgutil --check-signature "${tmp_pkg_dir}/Zoom.pkg" | /usr/bin/awk /'Developer ID Installer/{ print $5 }'`
-  if [[ "${signature_check}" = "Zoom" ]]; then
+  if /usr/sbin/pkgutil --check-signature "${tmp_pkg_dir}/Zoom.pkg" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
     logger_func INFO "Installer certificate is valid, installing..."
     /usr/sbin/installer -pkg "${tmp_pkg_dir}/Zoom.pkg" -target "/" -verboseR > /dev/null 2>&1
     if [ $? -eq 0 ]; then

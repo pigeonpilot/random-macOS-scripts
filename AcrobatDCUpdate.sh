@@ -28,7 +28,6 @@ declare exit_status="1"
 declare latest_ver=""
 declare -r log_file="/Library/Logs/AcrobatDCUpdate.log"
 declare os_version=""
-declare signature_check=""
 declare user_agent=""
 
 trap cleanup_func 1 2 3 6 15
@@ -124,8 +123,7 @@ update_func () {
 
       # TODO fix sigcheck
       if [[ "${app_pkg_path}" != "" ]]; then
-        signature_check=`/usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/awk /'Developer ID Installer/{ print $5 }'`
-        if [[ "${signature_check}" = "Adobe" ]]; then
+        if /usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
           logger_func INFO "Installer certificate is valid, installing..."
           installer_err=`/usr/sbin/installer -pkg "${app_pkg_path}" -target "/" -verboseR | "/usr/bin/grep" "was successful."`
           if [[ "${installer_err}" =~ "was successful." ]]; then

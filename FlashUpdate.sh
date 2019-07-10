@@ -39,7 +39,6 @@ declare -r log_file="/Library/Logs/FlashUpdateScript.log"
 declare plugin_name=""
 declare -r settings_directory="/Library/Application Support/Macromedia"
 declare -r settings_file="mms.cfg"
-declare signature_check=""
 declare -r SilentAutoUpdateEnable=$((1-AutoUpdateDisable))
 
 trap cleanup_func 1 2 3 6 15
@@ -126,8 +125,7 @@ update_plugin_func () {
           app_pkg_path=`/usr/bin/find "${app_mount}" -type f -name "Adobe Flash Player.pkg"`
 
           if [[ "${app_pkg_path}" != "" ]]; then
-            signature_check=`/usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/awk /'Developer ID Installer/{ print $5 }'`
-            if [[ "${signature_check}" = "Adobe" ]]; then
+            if /usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
               logger_func INFO "Installer certificate is valid, installing..."
               installer_err=`/usr/sbin/installer -pkg "${app_pkg_path}" -target "/" -verboseR | "/usr/bin/grep" "was successful."`
               if [[ "${installer_err}" =~ "was successful." ]]; then

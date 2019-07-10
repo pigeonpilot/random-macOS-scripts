@@ -28,7 +28,6 @@ declare latest_app_build=""
 declare latest_app_ver=""
 declare -r log_file="/Library/Logs/VirtualBoxUpdate.log"
 declare os_version=""
-declare signature_check=""
 declare -r update_url="https://www.virtualbox.org/wiki/Downloads"
 declare user_agent=""
 
@@ -134,8 +133,9 @@ update_app_func () {
       logger_func INFO "Mounted the installer disk image at ${app_mount}."
       app_pkg_path=`/usr/bin/find "${app_mount}" -type f -name "VirtualBox.pkg"`
       if [[ "${app_pkg_path}" != "" ]]; then
-        signature_check=`/usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -A100 "Status: signed by a certificate trusted by Mac OS X" | /usr/bin/sed -n 's/.*Developer ID Installer: \(Oracle America, Inc.\).*/\1/p'`
-        if [[ "${signature_check}" = "Oracle America, Inc." ]]; then
+
+
+        if /usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
           logger_func INFO "Installer certificate is valid, installing..."
           installer_err=`/usr/sbin/installer -pkg "${app_pkg_path}" -target "/" -verboseR | "/usr/bin/grep" "was successful."`
           if [[ "${installer_err}" =~ "was successful." ]]; then
