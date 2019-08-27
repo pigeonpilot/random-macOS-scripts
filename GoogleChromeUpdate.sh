@@ -157,6 +157,8 @@ else
   cleanup_func 0
 fi
 
+cleanup_func 0
+
 else
   logger_func ERROR "This script is for Intel Macs only."
 fi
