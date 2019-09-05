@@ -99,7 +99,7 @@ update_func () {
   
   logger_func INFO "Downloading update..."
   
-  /usr/bin/curl -A "${user_agent}" --fail --connect-timeout 10 -m 300 -s -o "${dmg_file}" "${download_url}/VMware-Fusion-${latest_app_ver}-${latest_app_build}.dmg"
+  /usr/bin/curl -A "${user_agent}" --fail --connect-timeout 10 -m 900 -s -o "${dmg_file}" "${download_url}/VMware-Fusion-${latest_app_ver}-${latest_app_build}.dmg"
   if [ $? -eq 0 ]; then
     logger_func INFO "Successfully downloaded ${download_url}/VMware-Fusion-${latest_app_ver}-${latest_app_build}.dmg."
   else
