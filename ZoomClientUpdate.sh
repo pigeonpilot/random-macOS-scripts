@@ -58,7 +58,7 @@ delete_pkg_func () {
 }
 
 app_ver_func () {
-  curr_installed_app_ver=`/usr/bin/defaults read "/Applications/zoom.us.app/Contents/Info.plist" CFBundleVersion`
+  curr_installed_app_ver=`/usr/bin/defaults read "/Applications/zoom.us.app/Contents/Info.plist" CFBundleShortVersionString`
   if [[ ! "${curr_installed_app_ver}" =~ ^[0-9]+ ]]; then
     logger_func ERROR "Error detecting installed version of Zoom.us Client."
   fi
