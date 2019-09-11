@@ -147,7 +147,7 @@ if [ '`/usr/bin/uname -p`'="i386" -o '`/usr/bin/uname -p`'="x86_64" ]; then
   fi
   user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X ${os_version}) AppleWebKit/535.6.2 (KHTML, like Gecko) Version/5.2 Safari/535.6.2"
   app_ver_func
-  if [ "${current_ver_norm}" -lt "${latest_ver_norm}" ]; then
+  if [ "${current_ver_norm}" != "${latest_ver_norm}" ]; then
     logger_func INFO "Installed version of VideoLAN is ${current_ver}, latest version is ${latest_ver}, update needed."
     update_func
   else
