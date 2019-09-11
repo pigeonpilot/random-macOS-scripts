@@ -83,12 +83,12 @@ app_ver_func () {
     logger_func ERROR "Error detecting installed version of VMware Fusion."
   fi
 
-  latest_app=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}" | sed -n 's/.*<url>fusion\/\([0-9.]*\)\/\([0-9]*\)\/.*<\/url>.*/\1 \2/p' | grep ^11. | sort -V | uniq | tail -n1`
-  latest_app_ver=`echo ${latest_app} | cut -d " " -f 1`
+  latest_app=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}" | /usr/bin/sed -n 's/.*<url>fusion\/\([0-9.]*\)\/\([0-9]*\)\/.*<\/url>.*/\1 \2/p' | /usr/bin/grep ^"${curr_installed_app_major}". | /usr/bin/sort -V | /usr/bin/uniq | /usr/bin/tail -n1`
+  latest_app_ver=`/bin/echo ${latest_app} | /usr/bin/cut -d " " -f 1`
   if [[ "${latest_app_ver}" =~ ^[0-9]+ ]]; then
-    latest_app_build=`echo ${latest_app} | cut -d " " -f 2`
+    latest_app_build=`/bin/echo ${latest_app} | /usr/bin/cut -d " " -f 2`
     if ! [[ "${latest_app_build}" =~ ^[0-9]+ ]]; then
-      logger_func ERROR "Error detecting latest version of VMware Fusion."
+      logger_func ERROR "Error detecting latest build of VMware Fusion."
     fi
   else
     logger_func ERROR "Error detecting latest version of VMware Fusion."
