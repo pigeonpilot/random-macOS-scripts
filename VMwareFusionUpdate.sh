@@ -28,7 +28,7 @@ declare latest_app_build=""
 declare latest_app_ver=""
 declare -r log_file="/Library/Logs/VMwareFusionUpdate.log"
 declare os_version=""
-declare -r update_url="https://softwareupdate.vmware.com/cds/vmw-desktop/fusion.xml"
+declare -r update_url="https://softwareupdate.vmware.com/cds/vmw-desktop/fusion"
 declare user_agent=""
 
 trap cleanup_func 1 2 3 6 15
@@ -83,10 +83,9 @@ app_ver_func () {
     logger_func ERROR "Error detecting installed version of VMware Fusion."
   fi
 
-  latest_app=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}" | /usr/bin/sed -n 's/.*<url>fusion\/\([0-9.]*\)\/\([0-9]*\)\/.*<\/url>.*/\1 \2/p' | /usr/bin/grep ^"${curr_installed_app_major}". | /usr/bin/sort -V | /usr/bin/uniq | /usr/bin/tail -n1`
-  latest_app_ver=`/bin/echo ${latest_app} | /usr/bin/cut -d " " -f 1`
+  latest_app_ver=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}" | /usr/bin/sed -n 's/.*href="\(.*\)\/".*/\1/p' | /usr/bin/grep ^"${curr_installed_app_major}" | /usr/bin/sort -V | /usr/bin/tail -n 1`
   if [[ "${latest_app_ver}" =~ ^[0-9]+ ]]; then
-    latest_app_build=`/bin/echo ${latest_app} | /usr/bin/cut -d " " -f 2`
+    latest_app_build=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "${update_url}/${latest_app_ver}" | /usr/bin/sed -n 's/.*href="\([0-9]*\)\/".*/\1/p'`
     if ! [[ "${latest_app_build}" =~ ^[0-9]+ ]]; then
       logger_func ERROR "Error detecting latest build of VMware Fusion."
     fi
