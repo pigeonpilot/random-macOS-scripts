@@ -135,7 +135,7 @@ update_app_func () {
       if [[ "${app_pkg_path}" != "" ]]; then
 
 
-        if /usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
+        if /usr/sbin/pkgutil --check-signature "${app_pkg_path}" | /usr/bin/egrep -s "Status: signed by a.* certificate trusted|issued by Mac OS X|Apple" > /dev/null 2>&1; then
           logger_func INFO "Installer certificate is valid, installing..."
           installer_err=`/usr/sbin/installer -pkg "${app_pkg_path}" -target "/" -verboseR | "/usr/bin/grep" "was successful."`
           if [[ "${installer_err}" =~ "was successful." ]]; then

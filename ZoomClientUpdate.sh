@@ -83,7 +83,7 @@ update_app_func () {
     logger_func ERROR "Error when downloading "${tmp_pkg_dir}/Zoom.pkg"."
   fi
 
-  if /usr/sbin/pkgutil --check-signature "${tmp_pkg_dir}/Zoom.pkg" | /usr/bin/grep -s "Status: signed by a certificate trusted by Mac OS X" > /dev/null 2>&1; then
+  if /usr/sbin/pkgutil --check-signature "${tmp_pkg_dir}/Zoom.pkg" | /usr/bin/egrep -s "Status: signed by a.* certificate trusted|issued by Mac OS X|Apple" > /dev/null 2>&1; then
     logger_func INFO "Installer certificate is valid, installing..."
     /usr/sbin/installer -pkg "${tmp_pkg_dir}/Zoom.pkg" -target "/" -verboseR > /dev/null 2>&1
     if [ $? -eq 0 ]; then
