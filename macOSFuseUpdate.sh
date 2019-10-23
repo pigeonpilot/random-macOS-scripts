@@ -19,17 +19,16 @@
 ####################################################################################################
 
 
-declare -r log_file="/Library/Logs/macOSFuseUpdate.log"
 declare app_mount=""
 declare curr_installed_app_ver=""
 declare dmg_file=""
-declare -r latest_url="https://github.com/osxfuse/osxfuse/releases/latest"
 declare download_url=""
 declare latest_app_ver=""
+declare -r latest_url="https://github.com/osxfuse/osxfuse/releases/latest"
+declare -r log_file="/Library/Logs/macOSFuseUpdate.log"
 declare os_version=""
 declare -r update_url=""
 declare user_agent=""
-
 
 ### START OF FUNCTION DECLARATIONS
 logger_func () {
