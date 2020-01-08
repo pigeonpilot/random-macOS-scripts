@@ -74,7 +74,7 @@ umount_dmg_func () {
 app_ver_func () {
   curr_installed_app_ver=`defaults read "/Applications/KeePassXC.app/Contents/Info.plist" CFBundleShortVersionString`
   if [[ "${curr_installed_app_ver}" =~ ^[0-9]+ ]]; then
-    download_url=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "https://keepassxc.org/download/" | /usr/bin/sed -n 's/.*"\(https:\/\/github.com.*KeePassXC-.*.dmg\)">/\1/p'`
+    download_url=`/usr/bin/curl --fail --connect-timeout 10 -m 300 -s -L -A "${user_agent}" "https://keepassxc.org/download/" | /usr/bin/sed -n 's/.*"\(https:\/\/github.com.*KeePassXC-.*[0-9].dmg\)">/\1/p'`
     if [ ! -z ${download_url} ]; then 
       latest_app_ver=`/bin/echo -n "${download_url}" | /usr/bin/sed -n 's/.*KeePassXC-\(.*\).dmg/\1/p'`
       if [[ ! "${latest_app_ver}" =~ ^[0-9]+ ]]; then
