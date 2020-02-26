@@ -28,7 +28,7 @@ declare user_agent=""
 declare -r download_url="https://github.com/balena-io/etcher/releases/download"
 declare -r latestver_url="https://raw.githubusercontent.com/balena-io/etcher/master/CHANGELOG.md"
 
-#trap cleanup_func 1 2 3 6 15
+trap cleanup_func 1 2 3 6 15
 
 ### START OF FUNCTION DECLARATIONS
 
