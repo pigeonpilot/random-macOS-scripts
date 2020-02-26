@@ -4,7 +4,7 @@
 # ABOUT THIS PROGRAM
 #
 # NAME
-#   VLCUpdate.sh
+#   LibreOfficeUpdate.sh
 #
 # DESCRIPTION 
 #   Updates LibreOffice on MacOS.
